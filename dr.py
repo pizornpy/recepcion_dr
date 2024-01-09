@@ -1,17 +1,14 @@
-import streamlit as st
+from flask import Flask, request
 
-def main():
-    st.title("Streamlit POST Request Example")
+app = Flask(__name__)
 
-    with st.form(key='my_form'):
-        text_input = st.text_input("Enter some text:")
-        submit_button = st.form_submit_button(label='Submit')
-
-        if submit_button:
-            # Handle the POST request data
-            st.success(f"Received POST request with text: {text_input}")
+@app.route('/webhook', methods=['POST'])
+def receive_webhook():
+    data = request.json  # Assuming the request payload is in JSON format
+    # Process the data as needed
+    print("Received POST request:", data)
+    return 'OK'
 
 if __name__ == '__main__':
-    main()
-
+    app.run(debug=True)
 
